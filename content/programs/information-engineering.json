@@ -1,0 +1,12 @@
+{
+  "name": "情報工学EP",
+  "department": "数物・電子情報系学科",
+  "slug": "information-engineering",
+  "keywords": ["AI", "ソフトウェア", "セキュリティ", "ネットワーク", "データ"],
+  "interest": "情報技術で社会課題を解きたい人",
+  "summary": "ソフトウェア、ネットワーク、セキュリティ、人工知能、データ処理などを基礎から応用まで学びます。",
+  "career_examples": ["IT企業", "研究開発", "大学院進学", "公共・インフラ分野"],
+  "image": "https://www.es.ynu.ac.jp/images/dep3.jpg",
+  "image_alt": "数物・電子情報系学科のイメージ"
+}
+

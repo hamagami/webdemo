@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GitベースCMS プロトタイプ | 横浜国立大学 理工学部</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #5d6975;
+      --line: #dce5ea;
+      --blue: #005bac;
+      --blue-soft: #e7f1fb;
+      --green: #0f8a6a;
+      --green-soft: #e5f6f1;
+      --yellow: #f2b705;
+      --bg: #f7fafc;
+      --panel: #ffffff;
+      --shadow: 0 14px 35px rgba(18, 33, 48, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    header {
+      background: var(--panel);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .bar {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    nav a {
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 34px 24px 72px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      gap: 28px;
+      align-items: stretch;
+      margin-bottom: 34px;
+    }
+
+    .hero-copy {
+      background: linear-gradient(135deg, #083b66 0%, #005bac 58%, #0f8a6a 100%);
+      color: #fff;
+      padding: 42px;
+      min-height: 360px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .eyebrow {
+      font-weight: 700;
+      color: var(--yellow);
+      margin: 0 0 12px;
+    }
+
+    h1 {
+      font-size: 40px;
+      line-height: 1.25;
+      margin: 0 0 18px;
+      letter-spacing: 0;
+    }
+
+    .hero-copy p {
+      margin: 0;
+      max-width: 720px;
+      font-size: 17px;
+    }
+
+    .repo {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .repo h2 {
+      margin-top: 0;
+    }
+
+    .tree {
+      margin: 0;
+      padding: 18px;
+      background: #0d1b2a;
+      color: #e6edf3;
+      overflow: auto;
+      font-family: Consolas, "SFMono-Regular", monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    section {
+      margin-top: 34px;
+    }
+
+    h2 {
+      font-size: 25px;
+      line-height: 1.35;
+      margin: 0 0 16px;
+      letter-spacing: 0;
+    }
+
+    .section-lead {
+      color: var(--muted);
+      max-width: 820px;
+      margin: -4px 0 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(18, 33, 48, 0.05);
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+      background: #d9e6ef;
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    .tagline {
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .card h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      line-height: 1.35;
+    }
+
+    .card p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .chip {
+      background: var(--blue-soft);
+      color: #064276;
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .news-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .news-item {
+      display: grid;
+      grid-template-columns: 120px 80px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 15px 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .date {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .category {
+      color: var(--green);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .news-item strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .step {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--blue);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 126px;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .step span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 18px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .panel h3 {
+      margin-top: 0;
+    }
+
+    .video-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .video {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      background: #fff;
+    }
+
+    .thumb {
+      background: linear-gradient(135deg, #005bac, #0f8a6a);
+      min-height: 112px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      text-align: center;
+      padding: 12px;
+    }
+
+    .video-body {
+      padding: 14px;
+    }
+
+    .video-body strong {
+      display: block;
+    }
+
+    .video-body span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .note {
+      border-left: 5px solid var(--green);
+      background: var(--green-soft);
+      padding: 16px 18px;
+      margin-top: 18px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      padding: 26px 24px;
+      text-align: center;
+      background: var(--panel);
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .grid,
+      .workflow {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .bar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      .hero-copy {
+        padding: 28px;
+        min-height: 300px;
+      }
+
+      .grid,
+      .workflow {
+        grid-template-columns: 1fr;
+      }
+
+      .news-item,
+      .video {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div class="brand">YNU 理工学部 リニューアル試作</div>
+      <nav aria-label="主要ナビゲーション">
+        <a href="#repo">Git管理</a>
+        <a href="#programs">EP比較</a>
+        <a href="#videos">動画</a>
+        <a href="#workflow">運用</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">GitHub as CMS Prototype</p>
+        <h1>コンテンツをGitで管理し、承認後に自動公開する理工学部サイト</h1>
+        <p>ニュース、学科・EP、動画、画像をリポジトリ内のデータとして管理し、Pull Requestレビューと自動チェックを通して静的サイトへ反映します。</p>
+      </div>
+      <aside class="repo" id="repo">
+        <h2>GitHub Repository（正本）</h2>
+        <pre class="tree">content/
+  news/
+    2026-open-campus.json
+    2026-route.json
+  programs/
+    information-engineering.json
+    mechanical-engineering.json
+    bio.json
+  videos/
+    info-ep-intro.json
+    route-intro.json
+public/images/
+src/pages/
+src/components/
+.github/workflows/</pre>
+      </aside>
+    </div>
+
+    <section aria-labelledby="news-title">
+      <h2 id="news-title">ニュースデータから生成される表示</h2>
+      <p class="section-lead">編集者は `content/news/` のファイルを追加・更新します。トップページやニュース一覧は、そのデータから自動生成されます。</p>
+      <div class="news-list">
+        <article class="news-item">
+          <div class="date">2026-06-12</div>
+          <div class="category">入試</div>
+          <div>
+            <strong>2026年来場型オープンキャンパスの理工学部資料を公開</strong>
+            <span>来場型オープンキャンパスで配布する理工学部資料を掲載しました。</span>
+          </div>
+        </article>
+        <article class="news-item">
+          <div class="date">2026-05-20</div>
+          <div class="category">教育</div>
+          <div>
+            <strong>ROUTE・iROUTEプロジェクト紹介を更新</strong>
+            <span>1年次から研究に参加できるプロジェクトの紹介ページを更新しました。</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="programs" aria-labelledby="programs-title">
+      <h2 id="programs-title">学科・EPデータから生成される比較カード</h2>
+      <p class="section-lead">各EPは `content/programs/` で管理します。キーワード、進路例、画像、説明文をデータ化することで、比較ページや受験生向けページに再利用できます。</p>
+      <div class="grid">
+        <article class="card">
+          <img src="https://www.es.ynu.ac.jp/images/dep3.jpg" alt="数物・電子情報系学科のイメージ">
+          <div class="card-body">
+            <div class="tagline">数物・電子情報系学科</div>
+            <h3>情報工学EP</h3>
+            <p>ソフトウェア、ネットワーク、セキュリティ、人工知能、データ処理などを基礎から応用まで学びます。</p>
+            <div class="chips"><span class="chip">AI</span><span class="chip">セキュリティ</span><span class="chip">データ</span></div>
+          </div>
+        </article>
+        <article class="card">
+          <img src="https://www.es.ynu.ac.jp/images/dep1.jpg" alt="機械・材料・海洋系学科のイメージ">
+          <div class="card-body">
+            <div class="tagline">機械・材料・海洋系学科</div>
+            <h3>機械工学EP</h3>
+            <p>材料力学、熱力学、流体力学、機械力学、自動制御などを基礎に、多様な機械システムを学びます。</p>
+            <div class="chips"><span class="chip">ロボット</span><span class="chip">航空宇宙</span><span class="chip">設計</span></div>
+          </div>
+        </article>
+        <article class="card">
+          <img src="https://www.es.ynu.ac.jp/images/dep2.jpg" alt="化学・生命系学科のイメージ">
+          <div class="card-body">
+            <div class="tagline">化学・生命系学科</div>
+            <h3>バイオEP</h3>
+            <p>生物学、化学、物理学を基礎に、生命現象の理解と応用を学びます。</p>
+            <div class="chips"><span class="chip">生命</span><span class="chip">医療</span><span class="chip">環境</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="videos" aria-labelledby="videos-title">
+      <h2 id="videos-title">動画データから生成されるライブラリ</h2>
+      <p class="section-lead">YouTube動画はファイル本体をGitに置かず、YouTube IDとメタデータを `content/videos/` で管理します。表示時はサムネイル化し、必要なときだけiframeを読み込む設計にします。</p>
+      <div class="split">
+        <div class="panel">
+          <h3>動画ライブラリ</h3>
+          <div class="video-list">
+            <article class="video">
+              <div class="thumb">EP紹介</div>
+              <div class="video-body">
+                <strong>情報工学EP紹介</strong>
+                <span>関連: 情報工学EP / 2026 / YouTube ID: UNB6oygjkUg</span>
+              </div>
+            </article>
+            <article class="video">
+              <div class="thumb">特色紹介</div>
+              <div class="video-body">
+                <strong>ROUTEプロジェクト紹介</strong>
+                <span>関連: 全学科 / 2026 / YouTube ID: yFK7INI0wko</span>
+              </div>
+            </article>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>編集ファイルの例</h3>
+          <pre class="tree">{
+  "title": "情報工学EP紹介",
+  "youtube_id": "UNB6oygjkUg",
+  "type": "EP紹介",
+  "program": "情報工学EP",
+  "year": 2026
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="workflow" aria-labelledby="workflow-title">
+      <h2 id="workflow-title">GitHubを使った公開フロー</h2>
+      <p class="section-lead">公開サイトの構造は `src/` が決め、掲載内容は `content/` が決めます。編集、承認、履歴、自動公開をGitHub上で一元管理します。</p>
+      <div class="workflow">
+        <div class="step"><strong>1. 編集</strong><span>CMS画面またはGitHubでMarkdown / JSON / 画像を編集</span></div>
+        <div class="step"><strong>2. PR作成</strong><span>変更差分をPull Requestとして提出</span></div>
+        <div class="step"><strong>3. 自動チェック</strong><span>ビルド、リンク、画像サイズ、アクセシビリティを確認</span></div>
+        <div class="step"><strong>4. レビュー</strong><span>学科・担当者が内容を確認して承認</span></div>
+        <div class="step"><strong>5. マージ</strong><span>mainブランチに取り込み、正本を更新</span></div>
+        <div class="step"><strong>6. 自動公開</strong><span>GitHub Actionsで静的サイトを生成して公開</span></div>
+      </div>
+      <div class="note">
+        このプロトタイプではHTMLに直接表示を記述していますが、実運用ではAstroなどが `content/` のファイルを読み込み、`src/pages/` と `src/components/` に従ってHTMLを自動生成します。
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    GitベースCMS運用プロトタイプ。編集対象は content/ と public/images/、構造設計は src/ に分離します。
+  </footer>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "機械工学EP",
+  "department": "機械・材料・海洋系学科",
+  "slug": "mechanical-engineering",
+  "keywords": ["ロボット", "航空宇宙", "エネルギー", "制御", "設計"],
+  "interest": "ものづくりや機械システムを設計したい人",
+  "summary": "材料力学、熱力学、流体力学、機械力学、自動制御などを基礎に、多様な機械システムを学びます。",
+  "career_examples": ["製造業", "自動車", "航空宇宙", "大学院進学"],
+  "image": "https://www.es.ynu.ac.jp/images/dep1.jpg",
+  "image_alt": "機械・材料・海洋系学科のイメージ"
+}
+

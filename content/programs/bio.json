@@ -1,0 +1,12 @@
+{
+  "name": "バイオEP",
+  "department": "化学・生命系学科",
+  "slug": "bio",
+  "keywords": ["生命", "医療", "生物", "化学", "環境"],
+  "interest": "生命現象を理解し、医療や環境課題に応用したい人",
+  "summary": "生物学、化学、物理学を基礎に、生命現象の理解と応用を学びます。",
+  "career_examples": ["医薬・化学", "食品", "環境", "大学院進学"],
+  "image": "https://www.es.ynu.ac.jp/images/dep2.jpg",
+  "image_alt": "化学・生命系学科のイメージ"
+}
+
